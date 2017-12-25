@@ -1,4 +1,4 @@
-package com.zhuxiangqing.messageforwarder.login;
+package com.zhuxiangqing.messageforwarder.ui.login;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

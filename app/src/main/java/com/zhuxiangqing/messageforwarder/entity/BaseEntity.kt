@@ -6,4 +6,4 @@ package com.zhuxiangqing.messageforwarder.entity
 protected int err = 0;
 protected String desc = "";
  */
-data class BaseEntity(var err: Int = 0, var desc: String = "")
+open  class BaseEntity(var err: Int = 0, var desc: String = "")

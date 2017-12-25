@@ -3,7 +3,9 @@ package com.zhuxiangqing.messageforwarder.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.zhuxiangqing.messageforwarder.login.LoginViewModel;
+import com.zhuxiangqing.messageforwarder.ui.launcher.LauncherViewModel;
+import com.zhuxiangqing.messageforwarder.ui.login.LoginViewModel;
+import com.zhuxiangqing.messageforwarder.ui.main.MainViewModel;
 import com.zhuxiangqing.messageforwarder.viewmodel.ViewModelFactory;
 
 import dagger.Binds;
@@ -18,8 +20,18 @@ import dagger.multibindings.IntoMap;
 public abstract class ViewModelModule {
     @Binds
     @IntoMap
+    @ViewModelKey(LauncherViewModel.class)
+    abstract ViewModel bindLauncherViewModel(LauncherViewModel launcherViewModel);
+
+    @Binds
+    @IntoMap
     @ViewModelKey(LoginViewModel.class)
     abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel.class)
+    abstract ViewModel bindMainViewModel(MainViewModel mainViewModel);
 
 
     @Binds

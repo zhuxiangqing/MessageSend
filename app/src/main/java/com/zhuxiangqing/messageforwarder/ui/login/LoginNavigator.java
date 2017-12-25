@@ -1,4 +1,4 @@
-package com.zhuxiangqing.messageforwarder.login;
+package com.zhuxiangqing.messageforwarder.ui.login;
 
 /**
  * Created by zhuxi on 2017/12/18.
@@ -6,4 +6,6 @@ package com.zhuxiangqing.messageforwarder.login;
 
 public interface LoginNavigator {
     void openMain();
+
+    void toastMessage(String msg);
 }

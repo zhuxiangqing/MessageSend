@@ -14,4 +14,5 @@
         completions."
     </string>
     <string name="title_activity_login">Sign in</string>
+    <string name="fragment_launcher_iv_content_desc">launcher_logo</string>
 </resources>

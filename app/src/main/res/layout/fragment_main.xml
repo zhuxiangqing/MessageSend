@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.zhuxiangqing.messageforwarder.ui.login.LoginViewModel" />
+            type="com.zhuxiangqing.messageforwarder.ui.main.MainViewModel" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -23,17 +23,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
-                    android:id="@+id/account"
+                <EditText
+                    android:id="@+id/card_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="@{viewModel.inputEnabled}"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:onTextChanged="@{(s,start,count,after)->viewModel.onAccountChanged(s)}"
                     android:singleLine="true"
-                    android:text="@={viewModel.account}" />
+                    android:text="@={viewModel.card1}" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -42,19 +40,17 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/card_two"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="@{viewModel.inputEnabled}"
                     android:hint="@string/prompt_password"
                     android:imeActionId="6"
+                    android:text="@={viewModel.card2}"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:onTextChanged="@{(s,start,count,after)->viewModel.onPasswordChanged(s)}"
-                    android:singleLine="true"
-                    android:text="@={viewModel.password}" />
+                    android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -64,11 +60,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:enabled="@{viewModel.loginEnabled}"
-                android:onClick="@{()->viewModel.loginClick()}"
                 android:text="@string/action_sign_in"
+                android:onClick="@{()->viewModel.onSubmitClick()}"
                 android:textStyle="bold" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+
 </layout>
