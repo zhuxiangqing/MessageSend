@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.zhuxiangqing.messageforwarder.ui.launcher.LauncherViewModel;
-import com.zhuxiangqing.messageforwarder.ui.login.LoginViewModel;
 import com.zhuxiangqing.messageforwarder.ui.main.MainViewModel;
 import com.zhuxiangqing.messageforwarder.viewmodel.ViewModelFactory;
 
@@ -22,11 +21,6 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LauncherViewModel.class)
     abstract ViewModel bindLauncherViewModel(LauncherViewModel launcherViewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LoginViewModel.class)
-    abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
 
     @Binds
     @IntoMap

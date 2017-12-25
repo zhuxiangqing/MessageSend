@@ -3,9 +3,7 @@ package com.zhuxiangqing.messageforwarder.ui.sms;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -25,10 +23,6 @@ public class SMSService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        BroadcastReceiver receiver = new SMSReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
-        registerReceiver(receiver, intentFilter);
     }
 
 
