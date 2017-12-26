@@ -23,15 +23,19 @@ public class MainViewModel extends AndroidViewModel {
 
     //EditText card1
     // input text;String
-    public final ObservableField<String> card1 = new ObservableField<>();
+    public final ObservableField<String> card1 = new ObservableField<>("13591607767");
     // Observable Fields over
 //    //error: String
 //    public final ObservableField<String> card1ErrorMsg = new ObservableField<>();
 //    //forced? boolean
 //    public final ObservableBoolean card1Forced = new ObservableBoolean(false);
 //
-    public final ObservableField<String> card2 = new ObservableField<>();
+    public final ObservableField<String> card2 = new ObservableField<>("15040262427");
 
+    public final ObservableBoolean submitEnabled = new ObservableBoolean(false);
+
+
+    public final ObservableBoolean numberHadSaved = new ObservableBoolean(false);
 
     public final SingleLiveEvent<Void> submitClickEvent = new SingleLiveEvent<>();
 
@@ -42,28 +46,55 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(@NonNull Application application, CardRepository cardRepository) {
         super(application);
         this.cardRepository = cardRepository;
+
+    }
+
+    @Inject
+    public void init() {
+        numberHadSaved.set(numberHadSaved());
+        card1.set(cardRepository.getCardOne());
+        card2.set(cardRepository.getCardTwo());
+    }
+
+    boolean numberHadSaved() {
+        return !TextUtils.isEmpty(cardRepository.getCardOne()) && !TextUtils.isEmpty(cardRepository.getCardTwo());
     }
 
 
-    public void observe(LifecycleOwner owner, final MainNavigator navigator) {
+    void observe(LifecycleOwner owner, final MainNavigator navigator) {
         submitClickEvent.observe(owner, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
                 navigator.startSMSService();
             }
         });
+        if (numberHadSaved()){
+            submitClickEvent.call();
+        }
+    }
+
+    public void onCardOneChanged(CharSequence cardOne) {
+        submitEnabled.set(!TextUtils.isEmpty(cardOne.toString()) && !TextUtils.isEmpty(card2.get()));
+    }
+
+    public void onCardTwoChanged(CharSequence cardTwo) {
+        submitEnabled.set(!TextUtils.isEmpty(cardTwo.toString()) && !TextUtils.isEmpty(card1.get()));
     }
 
 
+    public void onNumClearClick() {
+        cardRepository.clearNum();
+        init();
+    }
+
     public void onSubmitClick() {
-        if (TextUtils.isEmpty(card1.get())) {
-
+        //仅作为拦截
+        if (TextUtils.isEmpty(card1.get()) || TextUtils.isEmpty(card2.get())) {
             return;
         }
-        if (TextUtils.isEmpty(card2.get())) {
-
-            return;
-        }
+        cardRepository.saveCardOne(card1.get());
+        cardRepository.saveCardTwo(card2.get());
+        init();
         submitClickEvent.call();
     }
 

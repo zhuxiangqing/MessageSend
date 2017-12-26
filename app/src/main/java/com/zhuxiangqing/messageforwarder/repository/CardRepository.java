@@ -17,6 +17,12 @@ public class CardRepository {
         this.helper = helper;
     }
 
+
+    public void clearNum() {
+        helper.remove("card_one");
+        helper.remove("card_two");
+    }
+
     public void saveCardOne(String card1) {
         helper.putValue("card_one", card1);
     }

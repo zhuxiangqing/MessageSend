@@ -5,12 +5,21 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'mobile'
+            keyPassword '1024x768'
+            storeFile file('C:/Project/Convenient/convenient/com.thinkerjet.mobile.jks')
+            storePassword '1024x768'
+            v2SigningEnabled false
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.zhuxiangqing.messageforwarder"
-        minSdkVersion 19
+        minSdkVersion 22
         targetSdkVersion 26
-        versionCode 1
+        versionCode 390
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -18,6 +27,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
         }
     }
     dataBinding {
@@ -26,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
@@ -37,21 +49,18 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     //
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-// Because RxAndroid releases are few and far between, it is recommended you also
-// explicitly depend on RxJava's latest version for bug fixes and new features.
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
-
     //约束布局
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
     //android-architecture-component;
-    implementation "android.arch.lifecycle:extensions:1.0.0"
+    implementation 'android.arch.lifecycle:extensions:1.0.0'
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
-    implementation "android.arch.persistence.room:runtime:1.0.0"
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    implementation "android.arch.persistence.room:rxjava2:1.0.0"
+    implementation 'android.arch.persistence.room:rxjava2:1.0.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

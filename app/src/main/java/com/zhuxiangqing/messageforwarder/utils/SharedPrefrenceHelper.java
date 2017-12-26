@@ -28,4 +28,10 @@ public class SharedPrefrenceHelper {
     public String getValue(String key) {
         return sp.getString(key, "");
     }
+
+    public void remove(String key){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key);
+        editor.apply();
+    }
 }

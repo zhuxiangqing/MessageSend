@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MessageForwarder</string>
+    <string name="app_name">短信转发</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -15,4 +15,6 @@
     </string>
     <string name="title_activity_login">Sign in</string>
     <string name="fragment_launcher_iv_content_desc">launcher_logo</string>
+    <string name="fragment_main_edt_card1_text">请设置卡1号码</string>
+    <string name="fragment_main_edt_card2_text">请设置卡2号码</string>
 </resources>

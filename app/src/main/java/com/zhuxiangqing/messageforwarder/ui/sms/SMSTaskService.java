@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.provider.Telephony;
 import android.support.annotation.Nullable;
+import android.telecom.PhoneAccount;
 import android.telephony.SmsMessage;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -21,15 +22,17 @@ import java.lang.reflect.Method;
 
 import javax.inject.Inject;
 
+import dagger.android.DaggerIntentService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
  * Created by zhuxi on 2017/12/24.
+ *
  */
 
-public class SMSTaskService extends IntentService {
+public class SMSTaskService extends DaggerIntentService {
     @Inject
     SMSRepository repository;
 
@@ -50,20 +53,29 @@ public class SMSTaskService extends IntentService {
             TelephonyManager localTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String imsi = "";
             String phoneNumber = "";
+            int slotId = 0;
             int i = ((Integer) localMethod1.invoke(arrayOfSmsMessage[0], new Object[0])).intValue();
             if (Build.VERSION.SDK_INT >= 22) {
                 SubscriptionManager subscriptionManager = SubscriptionManager.from(this);
-                phoneNumber = subscriptionManager.getActiveSubscriptionInfo(i).getNumber();
-                //
+                slotId = subscriptionManager.getActiveSubscriptionInfo(i).getSimSlotIndex();
+
+            } else {
                 Class[] arrayOfClass2 = new Class[1];
                 arrayOfClass2[0] = Integer.TYPE;
-                Method localMethod3 = TelephonyManager.class.getMethod("getSubscriberId", arrayOfClass2);
+                Method getSlotIndex = TelephonyManager.class.getMethod("getSlotIndex",arrayOfClass2);
                 Object[] arrayOfObject2 = new Object[1];
-                arrayOfObject2[0] = i;
-                imsi = String.valueOf(localMethod3.invoke(localTelephonyManager, arrayOfObject2));
+                slotId = (int) getSlotIndex.invoke(null,arrayOfObject2);
             }
+            //
+            Class[] arrayOfClass2 = new Class[1];
+            arrayOfClass2[0] = Integer.TYPE;
+            Method localMethod3 = TelephonyManager.class.getMethod("getSubscriberId", arrayOfClass2);
+            Object[] arrayOfObject2 = new Object[1];
+            arrayOfObject2[0] = i;
+            imsi = String.valueOf(localMethod3.invoke(localTelephonyManager, arrayOfObject2));
+
             String str2 = arrayOfSmsMessage[0].getMessageBody();
-            repository.sendSMSToRemote(i,phoneNumber, imsi, str2, "", new Callback<BaseEntity>() {
+            repository.sendSMSToRemote(slotId, phoneNumber, imsi, str2, "", new Callback<BaseEntity>() {
                 @Override
                 public void onResponse(Call<BaseEntity> call, Response<BaseEntity> response) {
 
