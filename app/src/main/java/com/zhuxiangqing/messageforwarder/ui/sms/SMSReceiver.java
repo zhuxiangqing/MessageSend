@@ -1,11 +1,9 @@
 package com.zhuxiangqing.messageforwarder.ui.sms;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 
-import com.zhuxiangqing.messageforwarder.utils.SharedPrefrenceHelper;
+import com.zhuxiangqing.messageforwarder.repository.CardRepository;
 
 import javax.inject.Inject;
 
@@ -19,12 +17,12 @@ import dagger.android.DaggerBroadcastReceiver;
 public class SMSReceiver extends DaggerBroadcastReceiver {
 
     @Inject
-    SharedPrefrenceHelper helper;
+    CardRepository cardRepository;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context,intent);
-        if (TextUtils.isEmpty(helper.getValue("card_one"))||TextUtils.isEmpty(helper.getValue("card_two"))){
+        if (!cardRepository.hadNumberSaved()){
             return;
         }
         Intent smsIntent = new Intent(context, SMSTaskService.class);

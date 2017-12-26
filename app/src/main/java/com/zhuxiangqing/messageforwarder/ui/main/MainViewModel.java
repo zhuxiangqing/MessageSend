@@ -17,20 +17,15 @@ import javax.inject.Inject;
 
 /**
  * Created by zhuxi on 2017/12/24.
+ *
  */
 
 public class MainViewModel extends AndroidViewModel {
 
     //EditText card1
     // input text;String
-    public final ObservableField<String> card1 = new ObservableField<>("13591607767");
-    // Observable Fields over
-//    //error: String
-//    public final ObservableField<String> card1ErrorMsg = new ObservableField<>();
-//    //forced? boolean
-//    public final ObservableBoolean card1Forced = new ObservableBoolean(false);
-//
-    public final ObservableField<String> card2 = new ObservableField<>("15040262427");
+    public final ObservableField<String> card1 = new ObservableField<>();
+    public final ObservableField<String> card2 = new ObservableField<>();
 
     public final ObservableBoolean submitEnabled = new ObservableBoolean(false);
 
@@ -68,7 +63,7 @@ public class MainViewModel extends AndroidViewModel {
                 navigator.startSMSService();
             }
         });
-        if (numberHadSaved()){
+        if (numberHadSaved()) {
             submitClickEvent.call();
         }
     }

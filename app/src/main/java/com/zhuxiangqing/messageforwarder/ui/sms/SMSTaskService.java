@@ -75,17 +75,7 @@ public class SMSTaskService extends DaggerIntentService {
             imsi = String.valueOf(localMethod3.invoke(localTelephonyManager, arrayOfObject2));
 
             String str2 = arrayOfSmsMessage[0].getMessageBody();
-            repository.sendSMSToRemote(slotId, phoneNumber, imsi, str2, "", new Callback<BaseEntity>() {
-                @Override
-                public void onResponse(Call<BaseEntity> call, Response<BaseEntity> response) {
-
-                }
-
-                @Override
-                public void onFailure(Call<BaseEntity> call, Throwable t) {
-
-                }
-            });
+            repository.sendSMSToRemote(slotId, phoneNumber, imsi, str2, "");
 
             return;
         } catch (NoSuchMethodException localNoSuchMethodException1) {

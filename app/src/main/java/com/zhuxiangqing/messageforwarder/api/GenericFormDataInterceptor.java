@@ -1,24 +1,18 @@
 package com.zhuxiangqing.messageforwarder.api;
 
-import android.util.Pair;
+import android.app.Application;
 
 import com.thinkerjet.apisafe.ApiSafe;
 import com.zhuxiangqing.messageforwarder.utils.AppInfo;
 import com.zhuxiangqing.messageforwarder.utils.SharedPrefrenceHelper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.multibindings.IntoMap;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
-import okhttp3.MultipartBody;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -28,12 +22,12 @@ import okhttp3.Response;
 public class GenericFormDataInterceptor implements Interceptor {
 
     private SharedPrefrenceHelper helper;
-    private AppInfo info;
+    private Application application;
 
     @Inject
-    public GenericFormDataInterceptor(SharedPrefrenceHelper helper, AppInfo info) {
+    public GenericFormDataInterceptor(SharedPrefrenceHelper helper, Application application) {
         this.helper = helper;
-        this.info = info;
+        this.application = application;
     }
 
     @Override
@@ -43,14 +37,14 @@ public class GenericFormDataInterceptor implements Interceptor {
         String noceStr = ApiSafe.getNonceStr(8);
         String time = ApiSafe.getTimestamp();
         HttpUrl url = originalHttpUrl.newBuilder()
-                .addQueryParameter("ver", String.valueOf(info.getBuildVerison()))
+                .addQueryParameter("ver", String.valueOf(AppInfo.getBuildVerison(this.application)))
                 .addQueryParameter("os_ver", android.os.Build.VERSION.RELEASE)
-                .addQueryParameter("os", String.valueOf(info.getConfigOs()))
-                .addQueryParameter("token", helper.getValue("token"))
+                .addQueryParameter("os", String.valueOf(AppInfo.getConfigOs()))
+                .addQueryParameter("token", helper.getString("token"))
                 .addQueryParameter("timestamp", time)
                 .addQueryParameter("noncestr", noceStr)
                 .addQueryParameter("signature",
-                        ApiSafe.getApiSignature(helper.getValue("token")
+                        ApiSafe.getApiSignature(helper.getString("token")
                                 , time
                                 , noceStr))
                 .build();

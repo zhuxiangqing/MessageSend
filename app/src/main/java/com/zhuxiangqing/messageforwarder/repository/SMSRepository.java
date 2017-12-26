@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by zhuxi on 2017/12/24.
@@ -17,28 +18,38 @@ import retrofit2.Callback;
 
 public class SMSRepository {
     private ThinkerjetService thinkerjetService;
-    private SharedPrefrenceHelper helper;
+    private CardRepository cardRepository;
 
     @Inject
     public SMSRepository(ThinkerjetService thinkerjetService,
-                         SharedPrefrenceHelper helper) {
+                         CardRepository cardRepository) {
         this.thinkerjetService = thinkerjetService;
-        this.helper = helper;
+        this.cardRepository = cardRepository;
     }
 
-    public void sendSMSToRemote(int subId,String phoneNumber, String imsi, String smsContent, String remark, Callback<BaseEntity> call) {
+    public void sendSMSToRemote(int subId,String phoneNumber, String imsi, String smsContent, String remark) {
         if (TextUtils.isEmpty(phoneNumber)){
             switch (subId){
                 case 0:
-                    phoneNumber = helper.getValue("card_one");
+                    phoneNumber = cardRepository.getCardOne();
                     break;
                 case 1:
-                    phoneNumber = helper.getValue("card_two");
+                    phoneNumber = cardRepository.getCardTwo();
                     break;
             }
         }
         Call<BaseEntity> smsCall = thinkerjetService.smsContent(phoneNumber, imsi, smsContent, remark);
-        smsCall.enqueue(call);
+        smsCall.enqueue(new Callback<BaseEntity>() {
+            @Override
+            public void onResponse(Call<BaseEntity> call, Response<BaseEntity> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseEntity> call, Throwable t) {
+
+            }
+        });
     }
 
 

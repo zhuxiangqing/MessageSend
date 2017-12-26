@@ -1,7 +1,6 @@
 package com.zhuxiangqing.messageforwarder.ui.launcher;
 
 import android.Manifest;
-import android.animation.ValueAnimator;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import com.zhuxiangqing.messageforwarder.R;
 import com.zhuxiangqing.messageforwarder.base.BaseFragment;
 import com.zhuxiangqing.messageforwarder.di.Injectable;
 import com.zhuxiangqing.messageforwarder.ui.main.MainActivity;
-import com.zhuxiangqing.messageforwarder.utils.SharedPrefrenceHelper;
 
 import java.util.List;
 
@@ -36,8 +34,6 @@ public class LauncherFragment extends BaseFragment
     private static final int RC_SMS_PERM = 123;
     @Inject
     ViewModelProvider.Factory factory;
-    @Inject
-    SharedPrefrenceHelper helper;
 
     private ImageView ivLogo;
 

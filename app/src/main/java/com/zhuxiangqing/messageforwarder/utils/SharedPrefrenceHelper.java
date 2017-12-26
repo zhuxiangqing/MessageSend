@@ -6,32 +6,36 @@ import javax.inject.Inject;
 
 /**
  * Created by zhuxi on 2017/12/24.
- *
+ * 通用SharedPrefrence 操作方法
  */
 
 public class SharedPrefrenceHelper {
 
-    SharedPreferences sp;
+    private SharedPreferences sp;
 
     @Inject
     public SharedPrefrenceHelper(SharedPreferences sp) {
         this.sp = sp;
     }
 
-    public void putValue(String key, String value) {
+    public void putString(String key, String value) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
 
-    public String getValue(String key) {
+    public String getString(String key) {
         return sp.getString(key, "");
     }
 
-    public void remove(String key){
+
+    public void remove(String... keys) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.remove(key);
+        for (String key : keys
+                ) {
+            editor.remove(key);
+        }
         editor.apply();
     }
 }

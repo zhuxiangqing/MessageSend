@@ -12,18 +12,11 @@ import javax.inject.Inject;
  */
 
 public class AppInfo {
-    private Application application;
-
-    @Inject
-    public AppInfo(Application application) {
-        this.application = application;
-    }
-
 
     /*
     获取版本号
      */
-    public int getBuildVerison() {
+    public static int getBuildVerison(Application application) {
         PackageInfo info;
         try {
             info = application.getPackageManager().getPackageInfo(application.getPackageName(), 0);
@@ -34,7 +27,7 @@ public class AppInfo {
     }
 
 
-    public int getConfigOs(){
+    public static int getConfigOs(){
         return 1;
     }
 }
