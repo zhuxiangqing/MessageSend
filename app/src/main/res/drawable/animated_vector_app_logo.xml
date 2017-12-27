@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/app_logo">
+    <target
+        android:name="t"
+        android:animation="@animator/animation_login_logo" />
+    <target
+        android:name="h"
+        android:animation="@animator/animation_login_logo" />
+    <target
+        android:name="i"
+        android:animation="@animator/animation_login_logo" />
+    <target
+        android:name="n"
+        android:animation="@animator/animation_login_logo" />
+</animated-vector>

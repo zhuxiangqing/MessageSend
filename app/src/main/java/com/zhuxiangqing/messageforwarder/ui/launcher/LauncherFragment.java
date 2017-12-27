@@ -3,9 +3,12 @@ package com.zhuxiangqing.messageforwarder.ui.launcher;
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +27,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by zhuxi on 2017/12/25.
- *
  */
 
 public class LauncherFragment extends BaseFragment
@@ -36,7 +38,6 @@ public class LauncherFragment extends BaseFragment
     ViewModelProvider.Factory factory;
 
     private ImageView ivLogo;
-
 
 
     private String[] permissions = {Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_PHONE_STATE};
@@ -60,12 +61,18 @@ public class LauncherFragment extends BaseFragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       ivLogo.postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               smsPermissions();
-           }
-       },1000);
+        AnimatedVectorDrawable vectorDrawableCompat = (AnimatedVectorDrawable) ContextCompat.getDrawable(
+                getContext(),
+                R.drawable.animated_vector_app_logo
+        );
+        ivLogo.setImageDrawable(vectorDrawableCompat);
+        ivLogo.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                smsPermissions();
+            }
+        }, 5000);
+        vectorDrawableCompat.start();
     }
 
     void smsPermissions() {
