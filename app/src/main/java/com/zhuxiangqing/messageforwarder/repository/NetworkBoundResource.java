@@ -53,9 +53,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             @Override
             public void onChanged(@Nullable ResultType data) {
                 result.removeSource(dbSource);
-                if (shouldFetch(data)) {
+                if (shouldFetch(data)) {//需要获取数据
                     fetchFromNetwork(dbSource);
-                } else {
+                } else {//直接使用本地数据
                     result.addSource(dbSource, new Observer<ResultType>() {
                         @Override
                         public void onChanged(@Nullable ResultType newData) {

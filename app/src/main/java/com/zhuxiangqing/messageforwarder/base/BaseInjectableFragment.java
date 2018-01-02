@@ -3,6 +3,8 @@ package com.zhuxiangqing.messageforwarder.base;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.v4.app.Fragment;
 
+import com.zhuxiangqing.messageforwarder.di.Injectable;
+
 import javax.inject.Inject;
 
 /**
@@ -10,7 +12,7 @@ import javax.inject.Inject;
  *
  */
 
-public class BaseFragment extends Fragment {
+public class BaseInjectableFragment extends Fragment implements Injectable {
 
 
 }

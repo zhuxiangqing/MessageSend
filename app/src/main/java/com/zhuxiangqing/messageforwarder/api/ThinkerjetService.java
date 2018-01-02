@@ -5,6 +5,8 @@ import android.arch.lifecycle.LiveData;
 import com.zhuxiangqing.messageforwarder.entity.BaseEntity;
 import com.zhuxiangqing.messageforwarder.entity.login.LoginEntity;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -35,7 +37,7 @@ public interface ThinkerjetService {
      */
     @FormUrlEncoded
     @POST("smsContent/smsContent")
-    Call<BaseEntity> smsContent(
+    Observable<BaseEntity> smsContent(
             @Field("phoneNumber") String phoneNumber,
             @Field("imsi") String imsi,
             @Field("smsContent") String smsContent,

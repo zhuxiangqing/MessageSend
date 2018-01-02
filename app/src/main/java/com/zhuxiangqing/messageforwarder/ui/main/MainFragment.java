@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zhuxiangqing.messageforwarder.base.BaseFragment;
+import com.zhuxiangqing.messageforwarder.base.BaseInjectableFragment;
 import com.zhuxiangqing.messageforwarder.databinding.FragmentMainBinding;
 import com.zhuxiangqing.messageforwarder.di.Injectable;
 import com.zhuxiangqing.messageforwarder.ui.sms.SMSService;
@@ -22,7 +22,7 @@ import javax.inject.Inject;
  *
  */
 
-public class MainFragment extends BaseFragment implements Injectable, MainNavigator {
+public class MainFragment extends BaseInjectableFragment implements Injectable, MainNavigator {
     @Inject
     ViewModelProvider.Factory factory;
 

@@ -1,12 +1,15 @@
 package com.zhuxiangqing.messageforwarder.di;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.zhuxiangqing.messageforwarder.api.GenericFormDataInterceptor;
 import com.zhuxiangqing.messageforwarder.api.ThinkerjetService;
+import com.zhuxiangqing.messageforwarder.db.AppDb;
+import com.zhuxiangqing.messageforwarder.db.MessageDao;
 import com.zhuxiangqing.messageforwarder.utils.LiveDataCallAdapterFactory;
 
 import javax.inject.Singleton;
@@ -16,6 +19,7 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -33,6 +37,7 @@ public class AppModule {
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(ThinkerjetService.class);
     }
@@ -57,6 +62,21 @@ public class AppModule {
         SharedPreferences sp = application.getSharedPreferences(application.getPackageName(), Context.MODE_PRIVATE);
         return sp;
     }
+
+
+    @Singleton
+    @Provides
+    AppDb provideAppDb(Application application){
+        //db 文件名是在这里命名的；
+        return Room.databaseBuilder(application,AppDb.class,"message.db").build();
+    }
+
+    @Singleton
+    @Provides
+    MessageDao provideMessageDao(AppDb appDb){
+        return appDb.messageDao();
+    }
+
 
 
 }
